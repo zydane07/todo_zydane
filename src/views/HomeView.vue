@@ -1,33 +1,102 @@
 <template>
   <div id="home">
-    <h1>Hai Zydane</h1>
-    <p class="text-justify">
-      Lorem ipsum dolor sit amet consxxectetur adipisicing elit. Eius dolorum
-      cumque facere consequuntur adipisci voluptates similique, deleniti ab
-      blanditiis, debitis animi ratione, laborum inventore quae neque eum totam
-      vero nostrum.
-    </p>
+    <h2 class="indigo--text">Dashboard</h2>
 
-    <v-btn dark color="primary" depressed class="mr-5">
-      <v-icon left>mdi-email</v-icon>
-      <span>Login</span>
-    </v-btn>
-    <v-btn dark color="red">Logout</v-btn>
+    <v-container class="my-5">
+      <v-card
+        flat
+        class="pa-3 "
+        v-for="project in projects"
+        :key="project.title"
+      >
+        <v-layout row wrap :class="`px-3 py-5 project ${project.status}`">
+          <v-flex xs12 md6>
+            <div class="caption grey--text">Project title</div>
+            <div>{{ project.title }}</div>
+          </v-flex>
+          <v-flex xs6 sm4 md2>
+            <div class="caption grey--text">Person</div>
+            <div>{{ project.person }}</div>
+          </v-flex>
+          <v-flex xs6 sm4 md2>
+            <div class="caption grey--text">Due Date</div>
+            <div>{{ project.due }}</div>
+          </v-flex>
+          <v-flex xs2 sm4 md2>
+            <div >
 
-    <v-btn dark fab depressed small class="ml-5">
-      <v-icon color="primary">mdi-dialpad</v-icon>
-    </v-btn>
+            <v-chip right small :class="`my-2 caption white--text chip ${project.status}`">{{ project.status }}</v-chip>
+            </div>
+          </v-flex>
+        </v-layout>
+        <v-divider></v-divider>
+      </v-card>
+    </v-container>
   </div>
 </template>
 
 <script>
-// import HelloWorld from '../components/HelloWorld'
-
-// export default {
-//   name: 'Home-Item',
-
-//   components: {
-//     HelloWorld,
-//   },
-// }
+export default {
+  data() {
+    return {
+      projects: [
+        {
+          title: "Design a new website",
+          person: "Muhammad Zydane",
+          due: "1st Jan 2019",
+          status: "ongoing",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+        {
+          title: "Code up the homepage",
+          person: "Rahmat Ryan",
+          due: "10th Jan 2019",
+          status: "complete",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+        {
+          title: "Design video thumbnails",
+          person: "Soehatta",
+          due: "20th Dec 2018",
+          status: "complete",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+        {
+          title: "Create a community forum",
+          person: "Megalini",
+          due: "20th Oct 2018",
+          status: "overdue",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+      ],
+    };
+  },
+};
 </script>
+
+
+<style>
+.project.complete{
+  border-left: 4px solid #16e732;
+}
+.project.ongoing{
+  border-left: 4px solid #2d24cf;
+}
+.project.overdue{
+  border-left: 4px solid #e10b0b;
+}
+.v-chip.complete{
+  background: #16e732 !important;
+}
+.v-chip.ongoing{
+  background: #2d24cf !important;
+}
+.v-chip.overdue{
+  background: #e10b0b !important;
+}
+
+</style>
