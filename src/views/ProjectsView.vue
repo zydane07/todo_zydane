@@ -1,14 +1,79 @@
 <template>
   <div class="project">
-    <h2 class="indigo--text">This is an project page</h2>
+    <h2 class="indigo--text">My Projects</h2>
 
     <v-container class="my-5">
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident,
-        accusantium a dolores odio quasi corporis animi, minima aspernatur error
-        molestiae debitis eum! Rem perspiciatis voluptatibus nesciunt laboriosam
-        quaerat, cum aspernatur.
-      </p>
+      <v-expansion-panels>
+        <v-expansion-panel v-for="project in myProjects" :key="project.title">
+          <v-expansion-panel-header>
+            {{ project.title }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <div class="font-weight-bold">
+              Due Project: <span class="red--text">{{ project.due }}</span>
+            </div>
+            <div>{{ project.content }}</div>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-container>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      projects: [
+        {
+          title: "Design a new website",
+          person: "Muhammad Zydane",
+          due: "1st Jan 2019",
+          status: "ongoing",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+        {
+          title: "Code up the homepage",
+          person: "Rahmat Ryan",
+          due: "10th Jan 2019",
+          status: "done",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+        {
+          title: "Design video thumbnails",
+          person: "Soehatta",
+          due: "20th Dec 2018",
+          status: "done",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+        {
+          title: "Create a community forum",
+          person: "Megalini",
+          due: "20th Oct 2018",
+          status: "due",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+        {
+          title: "Design a new website 2",
+          person: "Muhammad Zydane",
+          due: "31st Jan 2019",
+          status: "ongoing",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+      ],
+    };
+  },
+  computed: {
+    myProjects() {
+      return this.projects.filter((project) => {
+        return project.person == "Muhammad Zydane";
+      });
+    },
+  },
+};
+</script>

@@ -3,9 +3,46 @@
     <h2 class="indigo--text">Dashboard</h2>
 
     <v-container class="my-5">
+      <v-layout row class="mb-3">
+        <p class="font-weight-bold mr-3">Sort Project:</p>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              small
+              depressed
+              elevation="1"
+              class="mr-4"
+              @click="sortBy('title')"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon color="grey" class="mr-2">mdi-folder</v-icon>
+              <span class="caption text-lowercase">By Projects</span>
+            </v-btn>
+          </template>
+          <span>Sort By Project Name</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              small
+              depressed
+              elevation="1"
+              @click="sortBy('person')"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon color="grey" class="mr-2">mdi-account</v-icon>
+              <span class="caption text-lowercase">By Person</span>
+            </v-btn>
+          </template>
+          <span>Sort By Project Name</span>
+        </v-tooltip>
+      </v-layout>
+
       <v-card
         flat
-        class="pa-3 "
+        class="pa-3"
         v-for="project in projects"
         :key="project.title"
       >
@@ -23,9 +60,12 @@
             <div>{{ project.due }}</div>
           </v-flex>
           <v-flex xs2 sm4 md2>
-            <div >
-
-            <v-chip right small :class="`my-2 caption white--text chip ${project.status}`">{{ project.status }}</v-chip>
+            <div class="text-right">
+              <v-chip
+                small
+                :class="`my-2 caption white--text ${project.status}`"
+                >{{ project.status }}</v-chip
+              >
             </div>
           </v-flex>
         </v-layout>
@@ -52,7 +92,7 @@ export default {
           title: "Code up the homepage",
           person: "Rahmat Ryan",
           due: "10th Jan 2019",
-          status: "complete",
+          status: "done",
           content:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
         },
@@ -60,7 +100,7 @@ export default {
           title: "Design video thumbnails",
           person: "Soehatta",
           due: "20th Dec 2018",
-          status: "complete",
+          status: "done",
           content:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
         },
@@ -68,35 +108,46 @@ export default {
           title: "Create a community forum",
           person: "Megalini",
           due: "20th Oct 2018",
-          status: "overdue",
+          status: "due",
+          content:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+        },
+        {
+          title: "Design a new website 2",
+          person: "Muhammad Zydane",
+          due: "31st Jan 2019",
+          status: "ongoing",
           content:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
         },
       ],
     };
   },
+  methods: {
+    sortBy(prop) {
+      this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
+    },
+  },
 };
 </script>
 
-
 <style>
-.project.complete{
+.project.done {
   border-left: 4px solid #16e732;
 }
-.project.ongoing{
+.project.ongoing {
   border-left: 4px solid #2d24cf;
 }
-.project.overdue{
+.project.due {
   border-left: 4px solid #e10b0b;
 }
-.v-chip.complete{
+.v-chip.done {
   background: #16e732 !important;
 }
-.v-chip.ongoing{
+.v-chip.ongoing {
   background: #2d24cf !important;
 }
-.v-chip.overdue{
+.v-chip.due {
   background: #e10b0b !important;
 }
-
 </style>

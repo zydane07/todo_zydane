@@ -18,6 +18,18 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app class="white">
+      <v-layout column align-center>
+        <v-flex class="mt-5" justify="center">
+          <v-avatar size="100" class="center">
+            <img src="/img/avatar-1.png" alt="" />
+          </v-avatar>
+          <p class="text-h6">Muhammad Zydane</p>
+        </v-flex>
+        <v-flex class="my-2">
+          <modalsAddProject />
+        </v-flex>
+      </v-layout>
+      <v-divider class="mt-2"></v-divider>
       <v-list-item
         v-for="link in links"
         :key="link.text"
@@ -36,7 +48,9 @@
 </template>
 
 <script>
+import modalsAddProject from "./AddProjects";
 export default {
+  components: { modalsAddProject },
   data() {
     return {
       drawer: false,
@@ -56,3 +70,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.center {
+  display: block;
+  margin: 0 auto;
+}
+</style>
