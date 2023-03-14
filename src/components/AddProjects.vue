@@ -14,9 +14,14 @@
             v-model="title"
             prepend-icon="mdi-folder"
           ></v-text-field>
+          <v-text-field
+            label="Person"
+            v-model="person"
+            prepend-icon="mdi-account"
+          ></v-text-field>
           <v-textarea
             label="Content"
-            v-model="info"
+            v-model="content"
             prepend-icon="mdi-information"
             :rules="contentRules"
           ></v-textarea>
@@ -37,7 +42,6 @@
             <v-date-picker
               v-model="due"
               @change="menu1 = false"
-              
             ></v-date-picker>
           </v-menu>
 
@@ -62,23 +66,38 @@
 </template>
 
 <script>
+// import format from 'date-fns/format'
+import db from "@/firebase";
+import { addDoc, collection } from "firebase/firestore";
 export default {
   data() {
     return {
       dialog: false,
       title: "",
-      info: "",
+      content: "",
+      person: "",
       due: null,
-      contentRules: [
-        v => v.length >= 3 || "Minimum length is 3 Chara"
-      ]
+      contentRules: [(v) => v.length >= 3 || "Minimum length is 3 Chara"],
     };
   },
   methods: {
-    submit() {
-      (this.dialog = false), console.log(this.title, this.info);
+    async submit() {
+      this.dialog = false;
+      try {
+        const project = await addDoc(collection(db, "projects"), {
+          title: this.title,
+          content: this.content,
+          due: this.due,
+          person: this.person,
+          status: "ongoing",
+        });
+
+        console.log("Document written with ID: ", project.id);
+        this.$emit("projectAdded");
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
     },
   },
-
 };
 </script>

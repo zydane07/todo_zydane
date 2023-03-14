@@ -1,5 +1,13 @@
 <template>
   <v-card outlined>
+    <v-snackbar v-model="snackbar" :timeout="2000" top color="teal">
+      <span>Project Berhasil Ditambahkan</span>
+      <template v-slot:action="{ attrs }">
+        <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-app-bar app>
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
@@ -26,7 +34,7 @@
           <p class="text-h6">Muhammad Zydane</p>
         </v-flex>
         <v-flex class="my-2">
-          <modalsAddProject />
+          <modalsAddProject @projectAdded="snackbar = true" />
         </v-flex>
       </v-layout>
       <v-divider class="mt-2"></v-divider>
@@ -55,6 +63,7 @@ export default {
     return {
       drawer: false,
       group: null,
+      snackbar: false,
       links: [
         { icon: "mdi-home", text: "Dashboard", route: "/" },
         { icon: "mdi-view-dashboard", text: "Projects", route: "/projects" },

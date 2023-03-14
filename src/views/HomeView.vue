@@ -76,57 +76,31 @@
 </template>
 
 <script>
+import db from "@/firebase";
+import { collection, getDocs } from "firebase/firestore";
+
 export default {
   data() {
     return {
-      projects: [
-        {
-          title: "Design a new website",
-          person: "Muhammad Zydane",
-          due: "1st Jan 2019",
-          status: "ongoing",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Code up the homepage",
-          person: "Rahmat Ryan",
-          due: "10th Jan 2019",
-          status: "done",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Design video thumbnails",
-          person: "Soehatta",
-          due: "20th Dec 2018",
-          status: "done",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Create a community forum",
-          person: "Megalini",
-          due: "20th Oct 2018",
-          status: "due",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Design a new website 2",
-          person: "Muhammad Zydane",
-          due: "31st Jan 2019",
-          status: "ongoing",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-      ],
+      projects: [],
     };
   },
   methods: {
     sortBy(prop) {
       this.projects.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
     },
+  },
+  async created() {
+    const querySnapshot = await getDocs(collection(db, "projects"));
+    const changes = querySnapshot.docChanges();
+    changes.forEach((change) => {
+      if (change.type === "added") {
+        this.projects.push({
+          ...change.doc.data(),
+          id: change.doc.id,
+        });
+      }
+    });
   },
 };
 </script>
